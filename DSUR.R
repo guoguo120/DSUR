@@ -46,7 +46,8 @@ summary(data)
 ls(data) #alfabetische volgorde
 names(data)
 
-plot(data$carb, data$mpg, type = "p", col = "red", main = "Titel", sub = "ondertitel", xlab = "xlabel", ylab = "ylabel", asp = NA)
+plot(data$carb, data$mpg, type = "p", col = "red", main = "Titel", sub = "ondertitel", 
+      xlab = "xlabel", ylab = "ylabel", asp = NA)
 hist(data$mpg, labels=T, breaks = 10, freq = T, col = "lightblue", border = "black" , density = 25)
 hist(x, labels=T, breaks = 100, freq = T, col = "lightblue", border = "black" , density = 25)
 barplot(data$mpg, type="h", labels=T, , freq = T, col = "lightblue", border = "black", density = 25)
