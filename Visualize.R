@@ -9,7 +9,8 @@
 # - ggvis
 # - googlevis
 # - Slidify
-# -
+# - Sparkline
+# - Sparklable
 # -
 # -
 # -
@@ -19,6 +20,9 @@
 #http://www.r-bloggers.com/interactive-visualizations-with-r-a-minireview/
 #http://cran.r-project.org/web/packages/googleVis/vignettes/googleVis_examples.html
 #http://ggvis.rstudio.com/interactivity.html
+#http://cran.r-project.org/web/packages/sparkTable/index.html
+
+
 
 
 #################################################
@@ -50,3 +54,33 @@ getwd()
 
 
 qplot(data = churn_csv[GD_Leeftijd < 100], Mobiel_pageviews_Q1bin, GD_Leeftijd, facets = Churn ~ .) + geom_jitter()
+
+
+
+
+
+
+
+
+
+#################################################
+#Sparkline
+
+install.packages("devtools")
+devtools::install_github('ramnathv/htmlwidgets') #https://github.com/ramnathv/htmlwidgets
+devtools::install_github('htmlwidgets/sparkline') #https://github.com/htmlwidgets/sparkline
+
+library("htmlwidgets")
+library("sparkline")
+
+data <- mtcars
+sparkline(data$mpg, type = 'bar', height = 400, width = 300)
+sparkline(data$disp, type = 'box', height = 400, width = 400)
+sparkline(data$qsec, type = 'bar')
+sparkline(x, type = 'box')
+
+#sparkline(var, type = 'box')
+#sparkline(var, type = 'line')
+#sparkline(var, type = 'bar')
+
+
