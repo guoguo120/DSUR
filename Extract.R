@@ -18,7 +18,7 @@
 
 #################################################
 
-setwd("/Users/vanvlietben/Dropbox/) #macbook
+setwd("/Users/vanvlietben/Dropbox/") #macbook
 setwd('C:\\Users\\bvliet\\Desktop\\BU\\R\\') #fdmg desktop
 setwd('G:\\Users\\BEN\\R\\') #fdmg fileserver
 getwd()
