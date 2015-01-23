@@ -18,7 +18,7 @@
 
 #################################################
 
-setwd('\\Users\\vanvlietben\\Dropbox\\20140101_FDMG\\R\\') #macbook
+setwd("/Users/vanvlietben/Dropbox/) #macbook
 setwd('C:\\Users\\bvliet\\Desktop\\BU\\R\\') #fdmg desktop
 setwd('G:\\Users\\BEN\\R\\') #fdmg fileserver
 getwd()
@@ -98,4 +98,3 @@ library("WDI")
 WDIsearch(string='gdp', field='name', cache=NULL)[1:100,] #search
 data <- WDI(indicator = 'MS.MIL.XPND.GD.ZS', country=c('MX','CA','US', 'NL'), start=1960, end=2012)
 ggplot(data, aes(year, BG.GSR.NFSV.GD.ZS, color=country)) + geom_line()
-
