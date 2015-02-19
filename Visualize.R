@@ -21,7 +21,7 @@
 #http://cran.r-project.org/web/packages/googleVis/vignettes/googleVis_examples.html
 #http://ggvis.rstudio.com/interactivity.html
 #http://cran.r-project.org/web/packages/sparkTable/index.html
-
+#http://rstudio.github.io/leaflet/
 
 
 
