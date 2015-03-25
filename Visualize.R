@@ -16,6 +16,10 @@
 # -
 # -
 
+# R Markdown w/ datacamp
+#https://www.datacamp.com/courses/reporting-with-r-markdown
+
+
 
 #http://www.r-bloggers.com/interactive-visualizations-with-r-a-minireview/
 #http://cran.r-project.org/web/packages/googleVis/vignettes/googleVis_examples.html
