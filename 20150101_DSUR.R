@@ -1,10 +1,11 @@
 
 
-#Index
-
-#################################################
-
 # - H1/2: statistics
+
+Samenvatting hier..
+
+
+
 # - H3: get to know R
 # - H4: graphs
 # - H5: Exploring assumptions
