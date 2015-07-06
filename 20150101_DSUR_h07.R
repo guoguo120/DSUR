@@ -19,7 +19,7 @@ data = mtcars
 summary(data)
 names(data)
 
-#na.action (not available i.e. missing data), zie p.257
+#na.action (not available i.e. missing data), p.257
 lm(hp ~ ., data = data)
 model1 <- lm(data = filter(data, cyl == 5|6), hp ~ mpg + disp, na.action = na.fail)
 model2 <- lm(data = filter(data, cyl == 5|6), hp ~ mpg + disp + wt, na.action = na.fail)
@@ -38,9 +38,6 @@ anova(model1, model2)
 #voorbeeld plot residuals
 mod <- lm(mpg ~ wt, data=mtcars)
 qplot(resid(mod), fitted(mod))
-
-
-
 
 
 
