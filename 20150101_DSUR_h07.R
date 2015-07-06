@@ -42,6 +42,21 @@ qplot(resid(mod), fitted(mod))
 
 
 
+####
+data <- mtcars
+model1 <- lm(formula(hp ~ .), data = data)
+y2 <- predict(model1, data); data <- cbind(data, y2)
+rm(model1, y2)
+plot(data$hp, data$y2)
+
+#fit lines
+abline(lm(data$hp~data$y2), col="red")
+lines(lowess(data$hp,data$y2), col="blue")
+
+
+
+
+
 
 
 
