@@ -1,5 +1,5 @@
 
-######H1/2: statistics
+#######H1/2: statistics
 ######H3: get to know R
 ######H4: graphs
 ######H5: Exploring assumptions
