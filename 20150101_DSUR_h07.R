@@ -1,3 +1,57 @@
+#Summary of "Field, A. P. & Miles, J. N. V. (2012). Discovering Statistics Using R."
+
+#H7: Regression
+
+install.packages("boot")
+install.packages("car")
+install.packages("QuantPsyc")
+install.packages("Rcmdr")
+
+library("boot")
+library("car")
+library("QuantPsyc")
+library("Rcmdr")
+
+#get data
+data = mtcars
+summary(data)
+names(data)
+
+#na.action (not available i.e. missing data), zie p.257
+lm(hp ~ ., data = data)
+model1 <- lm(data = filter(data, cyl == 5|6), hp ~ mpg + disp, na.action = na.fail)
+model2 <- lm(data = filter(data, cyl == 5|6), hp ~ mpg + disp + wt, na.action = na.fail)
+plot(model1)
+summary(model1)
+
+#get standardized beta's, p.283
+lm.beta(model1)
+
+#get confidence intervals
+confint(model1)
+
+#compare models
+anova(model1, model2)
+
+#voorbeeld plot residuals
+mod <- lm(mpg ~ wt, data=mtcars)
+qplot(resid(mod), fitted(mod))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #---------------------------------------------------------------------------------------------------------
 #R Code for Chapter 7 of:
 #
