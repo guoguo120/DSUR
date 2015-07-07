@@ -1,5 +1,68 @@
 
 
+install.packages("car")
+install.packages("mlogit")
+
+library(car)
+library(mlogit)
+library(Rcmdr)
+
+
+setwd('G:\\Users\\BEN')
+
+eelData <- read.delim("dsur/eel.dat", header = T)
+head(eelData)
+
+
+eelData$Cured <- relevel(eelData$Cured, "Not Cured") #set baseline
+eelData$Intervention <- relevel(eelData$Intervention, "No Treatment")
+
+eelData$Cured <- factor(eelData$Cured, levels = c("Not Cured", "Cured")) #alternative, set baseline
+eelData$Intervention <- factor(eelData$Intervention, levels = c("No Treatment", "Intervention"))
+
+#create model
+eelModel.0 <- glm(Cured ~ 1, data = eelData, family = binomial()) #get the null deviance
+eelModel.1 <- glm(Cured ~ Intervention, data = eelData, family = binomial())
+eelModel.2 <- glm(Cured ~ Intervention + Duration, data = eelData, family = binomial())
+
+summary(eelModel.0)
+summary(eelModel.1)
+summary(eelModel.2)
+
+
+
+
+
+
+
+
+
+modelChi <- eelModel.1$null.deviance - eelModel.1$deviance
+chidf <- eelModel.1$df.null - eelModel.1$df.residual
+chisq.prob <- 1 - pchisq(modelChi, chidf)
+modelChi; chidf; chisq.prob
+
+
+
+
+
+
+R2.hl<-modelChi/eelModel.1$null.deviance
+R.cs <- 1 - exp ((eelModel.1$deviance - eelModel.1$null.deviance)/113)
+R.n <- R.cs /( 1- ( exp (-(eelModel.1$null.deviance/ 113))))
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
