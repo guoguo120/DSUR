@@ -1,11 +1,21 @@
 
+#R Code for Chapter 8
 
-install.packages("car")
+#-when assumption of linear relationship is violated = logarithmic transformation, log regression is based on this principle.
+#-equation expresses the probabilty of Y occuring
+#-log-likelihood measures fit of model, similar to r2 for lineair regression
+
+
+
+
+install.packages("car") #install and load packages
 install.packages("mlogit")
+install.packages("Rcmdr")
 
 library(car)
 library(mlogit)
 library(Rcmdr)
+
 
 
 setwd('G:\\Users\\BEN')
