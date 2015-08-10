@@ -1,4 +1,3 @@
-
 #H8 Logistic regression
 
 #When assumption of linear relationship is violated = logarithmic transformation, equation expresses the prob of Y occuring
@@ -90,23 +89,17 @@ modelChi; chidf; chisq.prob
 anova(eelModel.1, eelModel.2) #alternative, compare model1 and model 2
 
 
+
 #casewise diagnostics
-#check probabilities + check if cases exert undue influence on model
+#check if cases exert undue influence on model
 eelData$predicted.probabilities <- fitted(eelModel.1)
-eelData$standardized.residuals <- rstandard(eelModel.1) #check 7.7 for interpretation
-eelData$studentized.residuals <- rstudent(eelModel.1)
-eelData$dfbeta <- dfbeta(eelModel.1)
-eelData$dffit <- dffits(eelModel.1)
-eelData$leverage <- hatvalues(eelModel.1)
+eelData$standardized.residuals <- rstandard(eelModel.1) #only 5% should lie outside 1.96, above 3 is cause for concern; check 7.7 for more info
+eelData$studentized.residuals <- rstudent(eelModel.1) #only 5% should lie outside 1.96, above 3 is cause for concern
+eelData$dfbeta <- dfbeta(eelModel.1) #should be less than 1
+eelData$dffit <- dffits(eelModel.1) #should be less than 1
+eelData$leverage <- hatvalues(eelModel.1) #lies between 0-1, expected value: number of predictors + 1 / number of cases (e.g. 2/113 = 0.018)
 
-head(eelData[, c("Cured", "Intervention", "Duration", "predicted.probabilities")])
-eelData[, c("leverage", "studentized.residuals", "dfbeta")]
-
-
-
-
-
-
+head(eelData)
 
 
 
