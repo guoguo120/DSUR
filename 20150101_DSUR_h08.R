@@ -1,9 +1,8 @@
+#H8 Logistic regression
 
-#R Code for Chapter 8
-
-#when assumption of linear relationship is violated = logarithmic transformation, log regression is based on this principle.
-#equation expresses the probabilty of Y occuring
-#log-likelihood measures fit of model, similar to r2 for lineair regression
+#8.3: when assumption of linear relationship is violated = logarithmic transformation; log regression is based on this principle;equation expresses the probabilty of Y occuring
+#8.3.1: log-likelihood measures fit of model, similar to r2 for lineair regression; high log-likelihood is much unexplained variance
+#8.3.2: deviance statistic
 
 
 
