@@ -1,9 +1,9 @@
 
 #R Code for Chapter 8
 
-#-when assumption of linear relationship is violated = logarithmic transformation, log regression is based on this principle.
-#-equation expresses the probabilty of Y occuring
-#-log-likelihood measures fit of model, similar to r2 for lineair regression
+#when assumption of linear relationship is violated = logarithmic transformation, log regression is based on this principle.
+#equation expresses the probabilty of Y occuring
+#log-likelihood measures fit of model, similar to r2 for lineair regression
 
 
 
