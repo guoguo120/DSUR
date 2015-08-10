@@ -42,35 +42,38 @@ eelModel.0 <- glm(Cured ~ 1, data = eelData, family = binomial()) #get the null 
 eelModel.1 <- glm(Cured ~ Intervention, data = eelData, family = binomial())
 eelModel.2 <- glm(Cured ~ Intervention + Duration, data = eelData, family = binomial())
 
-summary(eelModel.0)
+summary(eelModel.0) #get the null deviance
 summary(eelModel.1)
 summary(eelModel.2)
 
 
+modelChi <- eelModel.1$null.deviance - eelModel.1$deviance #get delta deviance
+chidf <- eelModel.1$df.null - eelModel.1$df.residual #get df
+chisq.prob <- 1 - pchisq(modelChi, chidf) #calc probability assiciated with chi-square statistic
+chisq.prob #check p-value (<0.05) of model improvement
 
 
+R2.hl <- modelChi/eelModel.1$null.deviance #Hosmer & Lemeshow's r2
+R2.cs <- 1 - exp((eelModel.1$deviance - eelModel.1$null.deviance)/(nrow(eelData))) #Cox & Snell's r2
+R2.n <- R.cs /( 1- ( exp (-(eelModel.1$null.deviance/(nrow(eelData)))))) #Nagelkerke's r2
+R2.hl; R2.cs; R2.n
 
 
+#function that computes pseudo r2's
+logisticPseudoR2s <- function(LogModel) {
+    dev <- LogModel$deviance 
+    nullDev <- LogModel$null.deviance 
+    modelN <-  length(LogModel$fitted.values)
+    R.l <-  1 -  dev / nullDev
+    R.cs <- 1- exp ( -(nullDev - dev) / modelN)
+    R.n <- R.cs / ( 1 - ( exp (-(nullDev / modelN))))
+    cat("Pseudo R^2 for logistic regression\n")
+    cat("Hosmer and Lemeshow R^2  ", round(R.l, 3), "\n")
+    cat("Cox and Snell R^2        ", round(R.cs, 3), "\n")
+    cat("Nagelkerke R^2           ", round(R.n, 3),    "\n")
+}
 
-
-
-modelChi <- eelModel.1$null.deviance - eelModel.1$deviance
-chidf <- eelModel.1$df.null - eelModel.1$df.residual
-chisq.prob <- 1 - pchisq(modelChi, chidf)
-modelChi; chidf; chisq.prob
-
-
-
-
-
-
-R2.hl<-modelChi/eelModel.1$null.deviance
-R.cs <- 1 - exp ((eelModel.1$deviance - eelModel.1$null.deviance)/113)
-R.n <- R.cs /( 1- ( exp (-(eelModel.1$null.deviance/ 113))))
-
-
-
-
+logisticPseudoR2s(eelModel.1)
 
 
 
