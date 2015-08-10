@@ -77,6 +77,31 @@ logisticPseudoR2s(eelModel.1)
 
 
 
+#Compute odds ratio of predictors, increase of 1 in b = increase / decrease of odds  by ...
+exp(eelModel.2$coefficients)
+exp(confint(eelModel.2))
+
+#compare model1 and model 2
+modelChi <- eelModel.1$deviance - eelModel.2$deviance
+chidf <- eelModel.1$df.residual - eelModel.2$df.residual
+chisq.prob <- 1 - pchisq(modelChi, chidf)
+modelChi; chidf; chisq.prob
+
+anova(eelModel.1, eelModel.2) #alternative, compare model1 and model 2
+
+
+#casewise diagnostics
+#check probabilities + check if cases exert undue influence on model
+eelData$predicted.probabilities <- fitted(eelModel.1)
+eelData$standardized.residuals <- rstandard(eelModel.1) #check 7.7 for interpretation
+eelData$studentized.residuals <- rstudent(eelModel.1)
+eelData$dfbeta <- dfbeta(eelModel.1)
+eelData$dffit <- dffits(eelModel.1)
+eelData$leverage <- hatvalues(eelModel.1)
+
+head(eelData[, c("Cured", "Intervention", "Duration", "predicted.probabilities")])
+eelData[, c("leverage", "studentized.residuals", "dfbeta")]
+
 
 
 
