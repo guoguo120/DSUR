@@ -1,9 +1,19 @@
+
 #H8 Logistic regression
 
-#8.3: when assumption of linear relationship is violated = logarithmic transformation; log regression is based on this principle;equation expresses the probabilty of Y occuring
-#8.3.1: log-likelihood measures fit of model, similar to r2 for lineair regression; high log-likelihood is much unexplained variance
-#8.3.2: deviance statistic
+#When assumption of linear relationship is violated = logarithmic transformation, equation expresses the probabilty of Y occuring
 
+
+#Principles of log regression
+
+#Assessing model: Log-likelihood (LL), deviance (-2LL), r and r2, Akaike information criterion (AIC/BIC)
+#Assessing predictors: z-score, odds ratio
+#Methods: forced entry, forward or backward stepwise entry
+#Assumptions: 1.) lineair relationship predictor and logit of outcome, 2.) independence of errors, 3.) multicollinearity
+#Incomplete information: check via crosstabulation for cells with low number of cases, could result in high SE
+
+
+   
 
 
 
