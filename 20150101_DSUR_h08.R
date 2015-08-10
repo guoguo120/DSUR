@@ -50,7 +50,7 @@ summary(eelModel.2)
 modelChi <- eelModel.1$null.deviance - eelModel.1$deviance #get delta deviance
 chidf <- eelModel.1$df.null - eelModel.1$df.residual #get df
 chisq.prob <- 1 - pchisq(modelChi, chidf) #calc probability assiciated with chi-square statistic
-chisq.prob #check p-value (<0.05) of model improvement
+modelChi; chidf; chisq.prob #check p-value (<0.05) of model improvement
 
 
 R2.hl <- modelChi/eelModel.1$null.deviance #Hosmer & Lemeshow's r2
