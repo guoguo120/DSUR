@@ -10,7 +10,7 @@
 #Methods: forced entry, forward or backward stepwise entry
 #Assumptions: 1.) lineair relationship predictor and logit of outcome, 2.) independence of errors, 3.) multicollinearity
 #Incomplete information: check via crosstabulation for cells with low n, could result in high SE
-
+#note on seperation [...]
 
 
 install.packages("car") #recode vars + check multicollinearity
