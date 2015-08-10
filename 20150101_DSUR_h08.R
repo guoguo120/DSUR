@@ -13,9 +13,6 @@
 #Incomplete information: check via crosstabulation for cells with low n, could result in high SE
 
 
-   
-
-
 
 install.packages("car") #recode vars + check multicollinearity
 install.packages("mlogit") #multinominal log regression
