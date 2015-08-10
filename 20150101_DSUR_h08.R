@@ -17,8 +17,8 @@
 
 
 
-install.packages("car") #install and load packages
-install.packages("mlogit")
+install.packages("car") #recode vars + check multicollinearity
+install.packages("mlogit") #multinominal log regression
 install.packages("Rcmdr")
 
 library(car)
