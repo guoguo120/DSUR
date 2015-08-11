@@ -76,8 +76,6 @@ logisticPseudoR2s <- function(LogModel) {
 
 logisticPseudoR2s(eelModel.1)
 
-
-
 #Compute odds ratio of predictors, increase of 1 in b = increase / decrease of odds  by ...
 exp(eelModel.2$coefficients)
 exp(confint(eelModel.2))
@@ -91,7 +89,6 @@ modelChi; chidf; chisq.prob
 anova(eelModel.1, eelModel.2) #alternative, compare model1 and model 2
 
 
-
 #casewise diagnostics
 #check if cases exert undue influence on model; check 7.7 for more info
 eelData$predicted.probabilities <- fitted(eelModel.1)
@@ -100,19 +97,13 @@ eelData$studentized.residuals <- rstudent(eelModel.1) #only 5% should lie outsid
 eelData$dfbeta <- dfbeta(eelModel.1) #should be less than 1
 eelData$dffit <- dffits(eelModel.1) #should be less than 1
 eelData$leverage <- hatvalues(eelModel.1) #lies between 0-1, expected value: number of predictors + 1 / n (e.g. 2/113 = 0.018)
-
 head(eelData)
-
-
-
-
 
 
 
 #********************* Penalty Example ********************
 
 penaltyData <- read.delim("penalty.dat", header = T)
-
 head(penaltyData); summary(penaltyData)
 
 penaltyModel.1 <- glm(Scored ~ Previous + PSWQ, data = penaltyData, family = binomial())
@@ -130,7 +121,6 @@ logisticPseudoR2s(penaltyModel.1)
 
 exp(penaltyModel.1$coefficients) #compute odds ratio
 exp(confint(penaltyModel.1)) #both lower and upper limit should be above or below 1
-
 
 modelChi <- penaltyModel.1$deviance - penaltyModel.2$deviance #compare model1 and model 2
 chidf <- penaltyModel.1$df.residual - penaltyModel.2$df.residual
@@ -162,16 +152,7 @@ summary(penaltyTest.1) #check if interaction vars are significant, if so: main e
 
 
 
-
-
-
-
-
-
-
-
-
-#********************* Chat Up Lines Example ********************
+#********************* Chat Up Lines Example **************
 
 chatData <- read.delim("Chat-Up Lines.dat", header = T)
 chatData$Gender <- relevel(chatData$Gender, ref = 2)
@@ -204,5 +185,3 @@ mlChat$logSex <- log(mlChat$Sex +1)
 head(mlChat)
 chatTest.1 <- mlogit(Success ~ 1 | Good_Mate + Funny + Sex + Funny:logFunny + Good_Mate:logGood + Sex:logSex, data = mlChat, reflevel=3)
 summary(chatTest.1)
-
-
