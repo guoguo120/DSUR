@@ -23,7 +23,7 @@ library(Rcmdr)
 setwd('G:\\Users\\BEN\\dsur')
 
 
-********************* Eel Example ************************
+#********************* Eel Example ************************
 
 eelData <- read.delim("eel.dat", header = T)
 head(eelData)
