@@ -2,7 +2,6 @@
 
 #When assumption of linear relationship is violated -> logarithmic transformation; equation is prob of Y occuring
 
-
 #Principles of log regression
 
 #Assessing model: Log-likelihood (LL), deviance (-2LL), r and r2, Akaike information criterion (AIC/BIC)
@@ -10,7 +9,6 @@
 #Methods: forced entry, forward or backward stepwise entry
 #Assumptions: 1.) lineairity predictor and logit of outcome var, 2.) independence of errors, 3.) multicollinearity
 #Caution: 1.) Incomplete information (check crosstabulation for cells with low n, could result in high SE), 2.) complete seperation
-
 
 install.packages("car") #recode vars + check multicollinearity
 install.packages("mlogit") #multinominal log regression
@@ -28,13 +26,11 @@ setwd('G:\\Users\\BEN\\dsur')
 eelData <- read.delim("eel.dat", header = T)
 head(eelData)
 
-
 eelData$Cured <- relevel(eelData$Cured, "Not Cured") #set baseline
 eelData$Intervention <- relevel(eelData$Intervention, "No Treatment")
 
 eelData$Cured <- factor(eelData$Cured, levels = c("Not Cured", "Cured")) #alternative, set baseline
 eelData$Intervention <- factor(eelData$Intervention, levels = c("No Treatment", "Intervention"))
-
 
 #create model
 eelModel.0 <- glm(Cured ~ 1, data = eelData, family = binomial()) #get the null deviance
@@ -45,18 +41,15 @@ summary(eelModel.0) #get the null deviance
 summary(eelModel.1)
 summary(eelModel.2)
 
-
 modelChi <- eelModel.1$null.deviance - eelModel.1$deviance #get delta deviance
 chidf <- eelModel.1$df.null - eelModel.1$df.residual #get df
 chisq.prob <- 1 - pchisq(modelChi, chidf) #calc probability assiciated with chi-square statistic
 modelChi; chidf; chisq.prob #check p-value (<0.05) of model improvement
 
-
 R2.hl <- modelChi/eelModel.1$null.deviance #Hosmer & Lemeshow's r2
 R2.cs <- 1 - exp((eelModel.1$deviance - eelModel.1$null.deviance)/(nrow(eelData))) #Cox & Snell's r2
 R2.n <- R.cs /( 1- ( exp (-(eelModel.1$null.deviance/(nrow(eelData)))))) #Nagelkerke's r2
 R2.hl; R2.cs; R2.n
-
 
 #function that computes pseudo r2's
 logisticPseudoR2s <- function(LogModel) {
@@ -86,7 +79,6 @@ modelChi; chidf; chisq.prob
 
 anova(eelModel.1, eelModel.2) #alternative, compare model1 and model 2
 
-
 #casewise diagnostics
 #check if cases exert undue influence on model; check 7.7 for more info
 eelData$predicted.probabilities <- fitted(eelModel.1)
@@ -96,7 +88,6 @@ eelData$dfbeta <- dfbeta(eelModel.1) #should be less than 1
 eelData$dffit <- dffits(eelModel.1) #should be less than 1
 eelData$leverage <- hatvalues(eelModel.1) #lies between 0-1, expected value: number of predictors + 1 / n (e.g. 2/113 = 0.018)
 head(eelData)
-
 
 
 #********************* Penalty Example ********************
@@ -132,11 +123,9 @@ logisticPseudoR2s(penaltyModel.2)
 exp(penaltyModel.2$coefficients) #compute odds ratio model 2
 exp(confint(penaltyModel.2))
 
-
 vif(penaltyModel.2) #testing multicollinearity, VIF over 10 is problematic; no statistical grounds for ommitting one var over another; factor analysis is possible solution
 1/vif(penaltyModel.2) #reciprocal of VIF
 cor(penaltyData[, c("Previous", "PSWQ", "Anxious")]) #check correlation of predictors
-
 
 penaltyData$logPSWQInt <- log(penaltyData$PSWQ)*penaltyData$PSWQ #test linearity of logit with interaction var; create interaction vars
 penaltyData$logAnxInt <- log(penaltyData$Anxious)*penaltyData$Anxious
@@ -144,7 +133,6 @@ penaltyData$logPrevInt <- log(penaltyData$Previous + 1)*penaltyData$Previous #ze
 head(penaltyData)
 penaltyTest.1 <- glm(Scored ~ PSWQ + Anxious + Previous + logPSWQInt + logAnxInt + logPrevInt, data=penaltyData, family=binomial())
 summary(penaltyTest.1) #check if interaction vars are significant, if so: main effect has violated assumption of linearity
-
 
 
 #********************* Chat Up Lines Example **************
@@ -165,12 +153,10 @@ summary(chatModel)
 data.frame(odds1 = exp(chatModel$coefficients), odds2 = 1 / exp(chatModel$coefficients)) #check coefficients (p.353, gender)
 exp(confint(chatModel))
 
-
 chatData <- read.delim("Chat-Up Lines.dat", header = T); chatData$Gender <- relevel(chatData$Gender, ref = 2) #multicolinearity
 chatModel <- glm(Success ~ Funny + Good_Mate + Sex + Gender, data = chatData, family = binomial())
 vif(chatModel); 1/vif(chatModel)
 cor(chatData[, c("Funny", "Good_Mate", "Sex")])
-
 
 mlChat$logFunny <- log(mlChat$Funny +1) #testing the linearity of the logit
 mlChat$logGood <- log(mlChat$Good_Mate +1)
@@ -178,5 +164,4 @@ mlChat$logSex <- log(mlChat$Sex +1)
 head(mlChat)
 chatTest.1 <- mlogit(Success ~ 1 | Good_Mate + Funny + Sex + Funny:logFunny + Good_Mate:logGood + Sex:logSex, data = mlChat, reflevel=3)
 summary(chatTest.1)
-
 
