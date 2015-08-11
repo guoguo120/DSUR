@@ -60,7 +60,7 @@ logisticPseudoR2s <- function(LogModel) {
     R.cs <- 1- exp ( -(nullDev - dev) / modelN)
     R.n <- R.cs / ( 1 - ( exp (-(nullDev / modelN))))
     cat("Pseudo R^2 for logistic regression\n")
-    cat("Hosmer and Lemeshow R^2  ", round(R.hl, 3),  "\n")
+    cat("Hosmer and Lemeshow R^2  ", round(R.hl, 3), "\n")
     cat("Cox and Snell R^2        ", round(R.cs, 3), "\n")
     cat("Nagelkerke R^2           ", round(R.n, 3),  "\n")
     }
