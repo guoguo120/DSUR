@@ -8,8 +8,8 @@
 #Assessing model: Log-likelihood (LL), deviance (-2LL), r and r2, Akaike information criterion (AIC/BIC)
 #Assessing predictors: z-score, odds ratio
 #Methods: forced entry, forward or backward stepwise entry
-#Assumptions: 1.) lineair relationship predictor and logit of outcome, 2.) independence of errors, 3.) multicollinearity
-#Caution: 1.) Incomplete information (check via crosstabulation for cells with low n, could result in high SE), 2.) complete seperation
+#Assumptions: 1.) lineairity predictor and logit of outcome var, 2.) independence of errors, 3.) multicollinearity
+#Caution: 1.) Incomplete information (check crosstabulation for cells with low n, could result in high SE), 2.) complete seperation
 
 
 install.packages("car") #recode vars + check multicollinearity
@@ -21,8 +21,6 @@ library(mlogit)
 library(Rcmdr)
 
 setwd('G:\\Users\\BEN\\dsur')
-
-
 
 
 #********************* Eel Example ************************
@@ -135,20 +133,18 @@ exp(penaltyModel.2$coefficients) #compute odds ratio model 2
 exp(confint(penaltyModel.2))
 
 
-#testing multicollinearity
-vif(penaltyModel.2) #VIF over 10 is problematic; no statistical grounds for ommitting one var over another; factor analysis is possible solution
+vif(penaltyModel.2) #testing multicollinearity, VIF over 10 is problematic; no statistical grounds for ommitting one var over another; factor analysis is possible solution
 1/vif(penaltyModel.2) #reciprocal of VIF
 cor(penaltyData[, c("Previous", "PSWQ", "Anxious")]) #check correlation of predictors
 
 
-#testing linearity
 penaltyData$logPSWQInt <- log(penaltyData$PSWQ)*penaltyData$PSWQ #test linearity of logit with interaction var; create interaction vars
 penaltyData$logAnxInt <- log(penaltyData$Anxious)*penaltyData$Anxious
 penaltyData$logPrevInt <- log(penaltyData$Previous + 1)*penaltyData$Previous #zero has nog log, hence the addition of a constant (1)
 head(penaltyData)
-
 penaltyTest.1 <- glm(Scored ~ PSWQ + Anxious + Previous + logPSWQInt + logAnxInt + logPrevInt, data=penaltyData, family=binomial())
 summary(penaltyTest.1) #check if interaction vars are significant, if so: main effect has violated assumption of linearity
+
 
 
 
@@ -163,7 +159,6 @@ is.factor(chatData$Gender)
 mlChat <- mlogit.data(chatData, choice="Success", shape="wide") #rearrange data, each case three rows
 head(mlChat); summary(mlChat)
 
-
 chatModel <- mlogit(Success ~ 1 | Good_Mate + Funny + Gender + Sex + Gender:Sex + Funny:Gender , data = mlChat, reflevel=3) #including the interaction vars
 summary(chatModel)
 
@@ -171,17 +166,17 @@ data.frame(odds1 = exp(chatModel$coefficients), odds2 = 1 / exp(chatModel$coeffi
 exp(confint(chatModel))
 
 
-#multicolinearity
-chatData <- read.delim("Chat-Up Lines.dat", header = T); chatData$Gender <- relevel(chatData$Gender, ref = 2) 
+chatData <- read.delim("Chat-Up Lines.dat", header = T); chatData$Gender <- relevel(chatData$Gender, ref = 2) #multicolinearity
 chatModel <- glm(Success ~ Funny + Good_Mate + Sex + Gender, data = chatData, family = binomial())
 vif(chatModel); 1/vif(chatModel)
 cor(chatData[, c("Funny", "Good_Mate", "Sex")])
 
 
-#testing the linearity of the logit
-mlChat$logFunny <- log(mlChat$Funny +1)
+mlChat$logFunny <- log(mlChat$Funny +1) #testing the linearity of the logit
 mlChat$logGood <- log(mlChat$Good_Mate +1)
 mlChat$logSex <- log(mlChat$Sex +1)
 head(mlChat)
 chatTest.1 <- mlogit(Success ~ 1 | Good_Mate + Funny + Sex + Funny:logFunny + Good_Mate:logGood + Sex:logSex, data = mlChat, reflevel=3)
 summary(chatTest.1)
+
+
