@@ -149,8 +149,9 @@ summary(penaltyTest.1) #check if interaction vars are significant, if so: main e
 
 #********************* Chat Up Lines Example **************
 
+#multinominal log regression, dep var with three categories
 chatData <- read.delim("Chat-Up Lines.dat", header = T)
-chatData$Gender <- relevel(chatData$Gender, ref = 2)
+chatData$Gender <- relevel(chatData$Gender, ref = 2) #set ref category
 head(chatData); summary(chatData); table(chatData$Gender, chatData$Success)
 is.factor(chatData$Success) #check if var is factor, if F, use as.factor()
 is.factor(chatData$Gender)
