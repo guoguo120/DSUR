@@ -9,8 +9,7 @@
 #Assessing predictors: z-score, odds ratio
 #Methods: forced entry, forward or backward stepwise entry
 #Assumptions: 1.) lineair relationship predictor and logit of outcome, 2.) independence of errors, 3.) multicollinearity
-#Incomplete information: check via crosstabulation for cells with low n, could result in high SE
-#note on seperation [...]
+#Caution: 1.) Incomplete information (check via crosstabulation for cells with low n, could result in high SE), 2.) complete seperation
 
 
 install.packages("car") #recode vars + check multicollinearity
@@ -21,11 +20,14 @@ library(car)
 library(mlogit)
 library(Rcmdr)
 
+setwd('G:\\Users\\BEN\\dsur')
 
 
-setwd('G:\\Users\\BEN')
 
-eelData <- read.delim("dsur/eel.dat", header = T)
+
+#********************* Eel Example ************************
+
+eelData <- read.delim("eel.dat", header = T)
 head(eelData)
 
 
@@ -62,15 +64,15 @@ R2.hl; R2.cs; R2.n
 logisticPseudoR2s <- function(LogModel) {
     dev <- LogModel$deviance 
     nullDev <- LogModel$null.deviance 
-    modelN <-  length(LogModel$fitted.values)
-    R.l <-  1 -  dev / nullDev
+    modelN <- length(LogModel$fitted.values)
+    R.hl <-  1 - dev / nullDev
     R.cs <- 1- exp ( -(nullDev - dev) / modelN)
     R.n <- R.cs / ( 1 - ( exp (-(nullDev / modelN))))
     cat("Pseudo R^2 for logistic regression\n")
-    cat("Hosmer and Lemeshow R^2  ", round(R.l, 3), "\n")
+    cat("Hosmer and Lemeshow R^2  ", round(R.hl, 3),  "\n")
     cat("Cox and Snell R^2        ", round(R.cs, 3), "\n")
-    cat("Nagelkerke R^2           ", round(R.n, 3),    "\n")
-}
+    cat("Nagelkerke R^2           ", round(R.n, 3),  "\n")
+    }
 
 logisticPseudoR2s(eelModel.1)
 
@@ -100,6 +102,88 @@ eelData$dffit <- dffits(eelModel.1) #should be less than 1
 eelData$leverage <- hatvalues(eelModel.1) #lies between 0-1, expected value: number of predictors + 1 / n (e.g. 2/113 = 0.018)
 
 head(eelData)
+
+
+
+
+
+
+
+#********************* Penalty Example ********************
+
+penaltyData <- read.delim("penalty.dat", header = T)
+
+head(penaltyData); summary(penaltyData)
+
+penaltyModel.1 <- glm(Scored ~ Previous + PSWQ, data = penaltyData, family = binomial())
+penaltyModel.2 <- glm(Scored ~ Previous + PSWQ + Anxious, data = penaltyData, family = binomial())
+
+summary(penaltyModel.1)
+summary(penaltyModel.2)
+
+modelChi <- penaltyModel.1$null.deviance - penaltyModel.1$deviance #compute model 1 improvement
+chidf <- penaltyModel.1$df.null - penaltyModel.1$df.residual
+chisq.prob <- 1 - pchisq(modelChi, chidf)
+modelChi; chidf; chisq.prob
+
+logisticPseudoR2s(penaltyModel.1) 
+
+exp(penaltyModel.1$coefficients) #compute odds ratio
+exp(confint(penaltyModel.1)) #both lower and upper limit should be above or below 1
+
+
+modelChi <- penaltyModel.1$deviance - penaltyModel.2$deviance #compare model1 and model 2
+chidf <- penaltyModel.1$df.residual - penaltyModel.2$df.residual
+chisq.prob <- 1 - pchisq(modelChi, chidf)
+modelChi; chidf; chisq.prob
+
+anova(penaltyModel.1, penaltyModel.2) #alternative, compare model 1 and 2
+
+logisticPseudoR2s(penaltyModel.2)
+
+exp(penaltyModel.2$coefficients) #compute odds ratio model 2
+exp(confint(penaltyModel.2))
+
+
+#testing multicollinearity
+vif(penaltyModel.2) #VIF over 10 is problematic; no statistical grounds for ommitting one var over another; factor analysis is possible solution
+1/vif(penaltyModel.2) #reciprocal of VIF
+cor(penaltyData[, c("Previous", "PSWQ", "Anxious")]) #check correlation of predictors
+
+
+#testing linearity
+penaltyData$logPSWQInt <- log(penaltyData$PSWQ)*penaltyData$PSWQ #test linearity of logit with interaction var; create interaction vars
+penaltyData$logAnxInt <- log(penaltyData$Anxious)*penaltyData$Anxious
+penaltyData$logPrevInt <- log(penaltyData$Previous + 1)*penaltyData$Previous #zero has nog log, hence the addition of a constant (1)
+head(penaltyData)
+
+penaltyTest.1 <- glm(Scored ~ PSWQ + Anxious + Previous + logPSWQInt + logAnxInt + logPrevInt, data=penaltyData, family=binomial())
+summary(penaltyTest.1) #check if interaction vars are sign, if so: main effect has violated assumption of linearity
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
