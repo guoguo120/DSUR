@@ -147,7 +147,6 @@ summary(penaltyTest.1) #check if interaction vars are significant, if so: main e
 
 
 
-
 #********************* Chat Up Lines Example **************
 
 chatData <- read.delim("Chat-Up Lines.dat", header = T)
