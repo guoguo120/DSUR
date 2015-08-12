@@ -7,6 +7,7 @@
 # - H6: Correlation
 # - H7: Regression
 # - H8: Log regression
+# -- randomForest toevoegen, multinominal log regression
 # - H9: Comparing two means
 
 # - H10: ANOVA /GLM1
