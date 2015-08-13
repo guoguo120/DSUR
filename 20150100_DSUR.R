@@ -1,4 +1,4 @@
-
+#http://www.sagepub.com/dsur/main.htm
 
 # - H1/2: statistics
 # - H3: get to know R
@@ -20,6 +20,3 @@
 # - H17: Exploratory factor analysis
 # - H18: Categorical data
 # - H19: Multilevel linear models
-
-#http://www.sagepub.com/dsur/main.htm
-
