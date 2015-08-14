@@ -3,9 +3,6 @@
 #-- H8 Logistic regression -------------------------------------------------------------
 #---------------------------------------------------------------------------------------
 
-# - When assumption of linear relationship is violated -> logarithmic transformation
-# - Equation is prob of Y occuring
-
 # - Assessing model: log-likelihood (LL), deviance (-2LL), r2, Akaike info criterion (AIC/BIC)
 # - Assessing predictors: z-score, odds ratio
 # - Methods: forced entry, forward or backward stepwise entry
