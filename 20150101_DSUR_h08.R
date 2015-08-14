@@ -30,6 +30,7 @@ setwd('G:\\Users\\BEN\\dsur')
 
 
 #---------------------------------------------------------------------------------------
+#prep data
 
 eelData <- read.delim("eel.dat", header = T)
 head(eelData)
@@ -37,12 +38,10 @@ head(eelData)
 eelData$Cured <- relevel(eelData$Cured, "Not Cured") #set baseline
 eelData$Intervention <- relevel(eelData$Intervention, "No Treatment")
 
-eelData$Cured <- factor(eelData$Cured, levels = c("Not Cured", "Cured")) #alternative, set baseline
-eelData$Intervention <- factor(eelData$Intervention, levels = c("No Treatment", "Intervention"))
-
 
 #---------------------------------------------------------------------------------------
 #create model
+
 eelModel.0 <- glm(Cured ~ 1, data = eelData, family = binomial()) #get the null deviance
 eelModel.1 <- glm(Cured ~ Intervention, data = eelData, family = binomial())
 eelModel.2 <- glm(Cured ~ Intervention + Duration, data = eelData, family = binomial())
