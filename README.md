@@ -1,3 +1,4 @@
 ### DSUR
-Discovering statistics using R 
+Discovering statistics using R
+
 http://www.sagepub.com/dsur/main.htm
