@@ -10,9 +10,15 @@
 #Assumptions: 1.) lineairity predictor and logit of outcome var, 2.) independence of errors, 3.) multicollinearity
 #Caution: 1.) Incomplete information (check crosstabulation for cells with low n, could result in high SE), 2.) complete seperation
 
-install.packages("car") #recode vars + check multicollinearity
-install.packages("mlogit") #multinominal log regression
-install.packages("Rcmdr") #r commander
+
+
+#---------------------------------------------------------------------------------------
+#-- Load libraries ---------------------------------------------------------------------
+#---------------------------------------------------------------------------------------
+
+install.packages("car")
+install.packages("mlogit")
+install.packages("Rcmdr")
 
 library(car)
 library(mlogit)
@@ -21,7 +27,7 @@ library(Rcmdr)
 setwd('G:\\Users\\BEN\\dsur')
 
 
-#********************* Eel Example ************************
+#---------------------------------------------------------------------------------------
 
 eelData <- read.delim("eel.dat", header = T)
 head(eelData)
@@ -32,6 +38,8 @@ eelData$Intervention <- relevel(eelData$Intervention, "No Treatment")
 eelData$Cured <- factor(eelData$Cured, levels = c("Not Cured", "Cured")) #alternative, set baseline
 eelData$Intervention <- factor(eelData$Intervention, levels = c("No Treatment", "Intervention"))
 
+
+#---------------------------------------------------------------------------------------
 #create model
 eelModel.0 <- glm(Cured ~ 1, data = eelData, family = binomial()) #get the null deviance
 eelModel.1 <- glm(Cured ~ Intervention, data = eelData, family = binomial())
