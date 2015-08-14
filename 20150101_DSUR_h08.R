@@ -74,7 +74,9 @@ logisticPseudoR2s <- function(LogModel) {
     cat("Nagelkerke R^2           ", round(R.n, 3),  "\n")
     }
 
+logisticPseudoR2s(eelModel.0)
 logisticPseudoR2s(eelModel.1)
+logisticPseudoR2s(eelModel.2)
 
 
 #---------------------------------------------------------------------------------------
