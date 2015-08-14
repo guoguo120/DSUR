@@ -1,4 +1,6 @@
+#---------------------------------------------------------------------------------------
 #H8 Logistic regression
+#---------------------------------------------------------------------------------------
 
 #When assumption of linear relationship is violated -> logarithmic transformation; equation is prob of Y occuring
 
