@@ -17,16 +17,16 @@
 
 install.packages("car")
 install.packages("mlogit")
-install.packages("Rcmdr")
 
 library(car)
 library(mlogit)
-library(Rcmdr)
-
-setwd('G:\\Users\\BEN\\dsur')
 
 
 #--------------------------------------------------------------------------------------- 
+# Eel example
+#--------------------------------------------------------------------------------------- 
+
+setwd('G:\\Users\\BEN\\dsur')
 
 eelData <- read.delim("eel.dat", header = T)
 head(eelData)
@@ -82,7 +82,7 @@ logisticPseudoR2s(eelModel.2)
 
 #---------------------------------------------------------------------------------------
 
-#Compute odds ratio of predictors
+#Compute odds ratio of predictors, conf int: both lower and upper limit above or below 1
 exp(eelModel.2$coefficients)
 exp(confint(eelModel.2))
 
@@ -100,17 +100,18 @@ eelData$leverage <- hatvalues(eelModel.1) #<1, expected value: number of predict
 
 
 
+#---------------------------------------------------------------------------------------
+# Penalty Example
+#---------------------------------------------------------------------------------------
 
-
-
-
-
-
-
-#********************* Penalty Example ********************
+setwd('G:\\Users\\BEN\\dsur')
 
 penaltyData <- read.delim("penalty.dat", header = T)
-head(penaltyData); summary(penaltyData)
+head(penaltyData)
+summary(penaltyData)
+
+
+#---------------------------------------------------------------------------------------
 
 penaltyModel.1 <- glm(Scored ~ Previous + PSWQ, data = penaltyData, family = binomial())
 penaltyModel.2 <- glm(Scored ~ Previous + PSWQ + Anxious, data = penaltyData, family = binomial())
@@ -118,31 +119,50 @@ penaltyModel.2 <- glm(Scored ~ Previous + PSWQ + Anxious, data = penaltyData, fa
 summary(penaltyModel.1)
 summary(penaltyModel.2)
 
-modelChi <- penaltyModel.1$null.deviance - penaltyModel.1$deviance #compute model 1 improvement
+
+modelChi <- penaltyModel.1$null.deviance - penaltyModel.1$deviance
 chidf <- penaltyModel.1$df.null - penaltyModel.1$df.residual
 chisq.prob <- 1 - pchisq(modelChi, chidf)
 modelChi; chidf; chisq.prob
 
 logisticPseudoR2s(penaltyModel.1) 
 
-exp(penaltyModel.1$coefficients) #compute odds ratio
-exp(confint(penaltyModel.1)) #both lower and upper limit should be above or below 1
 
-modelChi <- penaltyModel.1$deviance - penaltyModel.2$deviance #compare model1 and model 2
+#---------------------------------------------------------------------------------------
+
+exp(penaltyModel.1$coefficients)
+exp(confint(penaltyModel.1)) 
+
+
+#---------------------------------------------------------------------------------------
+
+modelChi <- penaltyModel.1$deviance - penaltyModel.2$deviance
 chidf <- penaltyModel.1$df.residual - penaltyModel.2$df.residual
 chisq.prob <- 1 - pchisq(modelChi, chidf)
 modelChi; chidf; chisq.prob
 
-anova(penaltyModel.1, penaltyModel.2) #alternative, compare model 1 and 2
+anova(penaltyModel.1, penaltyModel.2)
 
 logisticPseudoR2s(penaltyModel.2)
 
-exp(penaltyModel.2$coefficients) #compute odds ratio model 2
+
+#---------------------------------------------------------------------------------------
+
+exp(penaltyModel.2$coefficients)
 exp(confint(penaltyModel.2))
 
-vif(penaltyModel.2) #testing multicollinearity, VIF over 10 is problematic; no statistical grounds for ommitting one var over another; factor analysis is possible solution
-1/vif(penaltyModel.2) #reciprocal of VIF
+
+#---------------------------------------------------------------------------------------
+
+#test multicollinearity, VIF >10 is problematic; 1/VIF is reciprocal of VIF
+vif(penaltyModel.2)
+1/vif(penaltyModel.2)
+
 cor(penaltyData[, c("Previous", "PSWQ", "Anxious")]) #check correlation of predictors
+
+
+#---------------------------------------------------------------------------------------
+#
 
 penaltyData$logPSWQInt <- log(penaltyData$PSWQ)*penaltyData$PSWQ #test linearity of logit with interaction var; create interaction vars
 penaltyData$logAnxInt <- log(penaltyData$Anxious)*penaltyData$Anxious
@@ -150,6 +170,16 @@ penaltyData$logPrevInt <- log(penaltyData$Previous + 1)*penaltyData$Previous #ze
 head(penaltyData)
 penaltyTest.1 <- glm(Scored ~ PSWQ + Anxious + Previous + logPSWQInt + logAnxInt + logPrevInt, data=penaltyData, family=binomial())
 summary(penaltyTest.1) #check if interaction vars are significant, if so: main effect has violated assumption of linearity
+
+
+
+
+
+
+
+
+
+
 
 
 #********************* Chat Up Lines Example **************
