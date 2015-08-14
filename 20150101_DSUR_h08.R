@@ -101,7 +101,7 @@ eelData$leverage <- hatvalues(eelModel.1) #<1, expected value: number of predict
 
 
 #---------------------------------------------------------------------------------------
-# Penalty Example
+# Penalty example
 #---------------------------------------------------------------------------------------
 
 setwd('G:\\Users\\BEN\\dsur')
@@ -162,53 +162,91 @@ cor(penaltyData[, c("Previous", "PSWQ", "Anxious")]) #check correlation of predi
 
 
 #---------------------------------------------------------------------------------------
-#
 
-penaltyData$logPSWQInt <- log(penaltyData$PSWQ)*penaltyData$PSWQ #test linearity of logit with interaction var; create interaction vars
-penaltyData$logAnxInt <- log(penaltyData$Anxious)*penaltyData$Anxious
-penaltyData$logPrevInt <- log(penaltyData$Previous + 1)*penaltyData$Previous #zero has nog log, hence the addition of a constant (1)
-head(penaltyData)
-penaltyTest.1 <- glm(Scored ~ PSWQ + Anxious + Previous + logPSWQInt + logAnxInt + logPrevInt, data=penaltyData, family=binomial())
-summary(penaltyTest.1) #check if interaction vars are significant, if so: main effect has violated assumption of linearity
+#test linearity of interaction var and predictor
+penaltyData$logPSWQInt <- log(penaltyData$PSWQ) * penaltyData$PSWQ
+penaltyData$logAnxInt <- log(penaltyData$Anxious) * penaltyData$Anxious
+penaltyData$logPrevInt <- log(penaltyData$Previous + 1) * penaltyData$Previous #0 has nog log, thus + 1
 
+penaltyTest.1 <- glm(Scored ~ PSWQ + 
+                                Anxious + 
+                                Previous + 
+                                logPSWQInt + 
+                                logAnxInt + 
+                                logPrevInt, 
+                                data=penaltyData, family=binomial())
 
-
-
-
-
-
-
-
+summary(penaltyTest.1) #if interaction vars are significant, main effect has violated assumption of linearity
 
 
 
-#********************* Chat Up Lines Example **************
 
-#multinominal log regression, dep var with three categories
+#---------------------------------------------------------------------------------------
+# Chat up lines example
+#---------------------------------------------------------------------------------------
+
+#multinominal log regression, dependent var with three categories
+
+setwd('G:\\Users\\BEN\\dsur')
+
 chatData <- read.delim("Chat-Up Lines.dat", header = T)
+
 chatData$Gender <- relevel(chatData$Gender, ref = 2) #set ref category
-head(chatData); summary(chatData); table(chatData$Gender, chatData$Success)
-is.factor(chatData$Success) #check if var is factor, if F, use as.factor()
+
+is.factor(chatData$Success) #check if var is factor, if FALSE, use as.factor()
 is.factor(chatData$Gender)
 
-mlChat <- mlogit.data(chatData, choice="Success", shape="wide") #rearrange data, each case three rows
-head(mlChat); summary(mlChat)
 
-chatModel <- mlogit(Success ~ 1 | Good_Mate + Funny + Gender + Sex + Gender:Sex + Funny:Gender , data = mlChat, reflevel=3) #including the interaction vars
+#---------------------------------------------------------------------------------------
+
+mlChat <- mlogit.data(chatData, choice="Success", shape="wide") #rearrange data, each case three rows
+head(mlChat)
+
+
+#---------------------------------------------------------------------------------------
+
+chatModel <- mlogit(Success ~ 1 | Good_Mate + 
+                                    Funny + 
+                                    Gender + 
+                                    Sex + 
+                                    Gender:Sex + 
+                                    Funny:Gender, 
+                                    data = mlChat, reflevel=3)
+
 summary(chatModel)
 
-data.frame(odds1 = exp(chatModel$coefficients), odds2 = 1 / exp(chatModel$coefficients)) #check coefficients (p.353, gender)
+
+#---------------------------------------------------------------------------------------
+
+data.frame(odds1 = exp(chatModel$coefficients), odds2 = 1 / exp(chatModel$coefficients)) #check coefficients
 exp(confint(chatModel))
 
-chatData <- read.delim("Chat-Up Lines.dat", header = T); chatData$Gender <- relevel(chatData$Gender, ref = 2) #multicolinearity
+
+#---------------------------------------------------------------------------------------
+
+#test multicolinearity
+
+chatData <- read.delim("Chat-Up Lines.dat", header = T)
+chatData$Gender <- relevel(chatData$Gender, ref = 2) 
 chatModel <- glm(Success ~ Funny + Good_Mate + Sex + Gender, data = chatData, family = binomial())
+
 vif(chatModel); 1/vif(chatModel)
 cor(chatData[, c("Funny", "Good_Mate", "Sex")])
 
-mlChat$logFunny <- log(mlChat$Funny +1) #testing the linearity of the logit
-mlChat$logGood <- log(mlChat$Good_Mate +1)
-mlChat$logSex <- log(mlChat$Sex +1)
-head(mlChat)
-chatTest.1 <- mlogit(Success ~ 1 | Good_Mate + Funny + Sex + Funny:logFunny + Good_Mate:logGood + Sex:logSex, data = mlChat, reflevel=3)
+
+#---------------------------------------------------------------------------------------
+
+mlChat$logFunny <- log(mlChat$Funny + 1) #testing the linearity of the logit
+mlChat$logGood <- log(mlChat$Good_Mate + 1)
+mlChat$logSex <- log(mlChat$Sex + 1)
+
+chatTest.1 <- mlogit(Success ~ 1 | Good_Mate + 
+                                    Funny + 
+                                    Sex + 
+                                    Funny:logFunny + 
+                                    Good_Mate:logGood + 
+                                    Sex:logSex, 
+                                    data = mlChat, reflevel = 3)
+
 summary(chatTest.1)
 
