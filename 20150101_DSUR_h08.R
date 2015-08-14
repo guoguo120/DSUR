@@ -6,11 +6,11 @@
 # - When assumption of linear relationship is violated -> logarithmic transformation
 # - Equation is prob of Y occuring
 
-# - Assessing model: Log-likelihood (LL), deviance (-2LL), r2, Akaike info criterion (AIC/BIC)
+# - Assessing model: log-likelihood (LL), deviance (-2LL), r2, Akaike info criterion (AIC/BIC)
 # - Assessing predictors: z-score, odds ratio
 # - Methods: forced entry, forward or backward stepwise entry
-# - Assumptions: 1.) lineairity, 2.) independence of errors, 3.) multicollinearity
-# - Caution: 1.) Incomplete information (cells with low n), 2.) complete seperation
+# - Assumptions: lineairity, independence of errors, multicollinearity
+# - Caution: incomplete information (cells with low n), complete seperation
 
 
 
