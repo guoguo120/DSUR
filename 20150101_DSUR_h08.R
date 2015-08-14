@@ -1,16 +1,16 @@
+
 #---------------------------------------------------------------------------------------
-#H8 Logistic regression
+#-- H8 Logistic regression -------------------------------------------------------------
 #---------------------------------------------------------------------------------------
 
-#When assumption of linear relationship is violated -> logarithmic transformation; equation is prob of Y occuring
+# - When assumption of linear relationship is violated -> logarithmic transformation
+# - Equation is prob of Y occuring
 
-#Principles of log regression
-
-#Assessing model: Log-likelihood (LL), deviance (-2LL), r and r2, Akaike information criterion (AIC/BIC)
-#Assessing predictors: z-score, odds ratio
-#Methods: forced entry, forward or backward stepwise entry
-#Assumptions: 1.) lineairity predictor and logit of outcome var, 2.) independence of errors, 3.) multicollinearity
-#Caution: 1.) Incomplete information (check crosstabulation for cells with low n, could result in high SE), 2.) complete seperation
+# - Assessing model: Log-likelihood (LL), deviance (-2LL), r2, Akaike info criterion (AIC/BIC)
+# - Assessing predictors: z-score, odds ratio
+# - Methods: forced entry, forward or backward stepwise entry
+# - Assumptions: 1.) lineairity, 2.) independence of errors, 3.) multicollinearity
+# - Caution: 1.) Incomplete information (cells with low n), 2.) complete seperation
 
 
 
