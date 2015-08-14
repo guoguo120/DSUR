@@ -56,7 +56,7 @@ logisticPseudoR2s <- function(LogModel) {
     dev <- LogModel$deviance 
     nullDev <- LogModel$null.deviance 
     modelN <- length(LogModel$fitted.values)
-    R.hl <-  1 - dev / nullDev
+    R.hl <- 1 - dev / nullDev
     R.cs <- 1- exp ( -(nullDev - dev) / modelN)
     R.n <- R.cs / ( 1 - ( exp (-(nullDev / modelN))))
     cat("Pseudo R^2 for logistic regression\n")
