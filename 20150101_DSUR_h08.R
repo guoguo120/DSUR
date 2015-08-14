@@ -55,7 +55,7 @@ modelChi; chidf; chisq.prob #check p-value (<0.05) of model improvement
 
 R2.hl <- modelChi/eelModel.1$null.deviance #Hosmer & Lemeshow's r2
 R2.cs <- 1 - exp((eelModel.1$deviance - eelModel.1$null.deviance)/(nrow(eelData))) #Cox & Snell's r2
-R2.n <- R.cs /( 1- ( exp (-(eelModel.1$null.deviance/(nrow(eelData)))))) #Nagelkerke's r2
+R2.n <- R.cs / ( 1 - ( exp (-(eelModel.1$null.deviance/(nrow(eelData)))))) #Nagelkerke's r2
 R2.hl; R2.cs; R2.n
 
 
@@ -66,7 +66,7 @@ logisticPseudoR2s <- function(LogModel) {
     nullDev <- LogModel$null.deviance 
     modelN <- length(LogModel$fitted.values)
     R.hl <- 1 - dev / nullDev
-    R.cs <- 1- exp ( -(nullDev - dev) / modelN)
+    R.cs <- 1 - exp ( -(nullDev - dev) / modelN)
     R.n <- R.cs / ( 1 - ( exp (-(nullDev / modelN))))
     cat("Pseudo R^2 for logistic regression\n")
     cat("Hosmer and Lemeshow R^2  ", round(R.hl, 3), "\n")
