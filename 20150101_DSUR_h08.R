@@ -236,7 +236,9 @@ cor(chatData[, c("Funny", "Good_Mate", "Sex")])
 
 #---------------------------------------------------------------------------------------
 
-mlChat$logFunny <- log(mlChat$Funny + 1) #testing the linearity of the logit
+#testing the linearity of the logit
+
+mlChat$logFunny <- log(mlChat$Funny + 1)
 mlChat$logGood <- log(mlChat$Good_Mate + 1)
 mlChat$logSex <- log(mlChat$Sex + 1)
 
