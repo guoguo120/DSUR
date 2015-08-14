@@ -46,17 +46,21 @@ summary(eelModel.0) #get the null deviance
 summary(eelModel.1)
 summary(eelModel.2)
 
+
 modelChi <- eelModel.1$null.deviance - eelModel.1$deviance #get delta deviance
 chidf <- eelModel.1$df.null - eelModel.1$df.residual #get df
 chisq.prob <- 1 - pchisq(modelChi, chidf) #calc probability assiciated with chi-square statistic
 modelChi; chidf; chisq.prob #check p-value (<0.05) of model improvement
+
 
 R2.hl <- modelChi/eelModel.1$null.deviance #Hosmer & Lemeshow's r2
 R2.cs <- 1 - exp((eelModel.1$deviance - eelModel.1$null.deviance)/(nrow(eelData))) #Cox & Snell's r2
 R2.n <- R.cs /( 1- ( exp (-(eelModel.1$null.deviance/(nrow(eelData)))))) #Nagelkerke's r2
 R2.hl; R2.cs; R2.n
 
-#function that computes pseudo r2's
+
+#---------------------------------------------------------------------------------------
+
 logisticPseudoR2s <- function(LogModel) {
     dev <- LogModel$deviance 
     nullDev <- LogModel$null.deviance 
@@ -72,6 +76,9 @@ logisticPseudoR2s <- function(LogModel) {
 
 logisticPseudoR2s(eelModel.1)
 
+
+#---------------------------------------------------------------------------------------
+
 #Compute odds ratio of predictors, increase of 1 in b = increase / decrease of odds  by ...
 exp(eelModel.2$coefficients)
 exp(confint(eelModel.2))
@@ -84,6 +91,8 @@ modelChi; chidf; chisq.prob
 
 anova(eelModel.1, eelModel.2) #alternative, compare model1 and model 2
 
+
+#---------------------------------------------------------------------------------------
 #casewise diagnostics
 #check if cases exert undue influence on model; check 7.7 for more info
 eelData$predicted.probabilities <- fitted(eelModel.1)
@@ -93,6 +102,9 @@ eelData$dfbeta <- dfbeta(eelModel.1) #should be less than 1
 eelData$dffit <- dffits(eelModel.1) #should be less than 1
 eelData$leverage <- hatvalues(eelModel.1) #lies between 0-1, expected value: number of predictors + 1 / n (e.g. 2/113 = 0.018)
 head(eelData)
+
+
+
 
 
 #********************* Penalty Example ********************
