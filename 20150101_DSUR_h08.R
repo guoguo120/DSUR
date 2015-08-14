@@ -51,6 +51,8 @@ chidf <- eelModel.1$df.null - eelModel.1$df.residual #get delta df
 chisq.prob <- 1 - pchisq(modelChi, chidf) #get prob associated with chi-square statistic
 modelChi; chidf; chisq.prob #check p-value of model improvement
 
+anova(eelModel.1, eelModel.2) #alternative, compare model 1 and model 2
+
 
 R2.hl <- modelChi/eelModel.1$null.deviance #get Hosmer & Lemeshow's r2
 R2.cs <- 1 - exp((eelModel.1$deviance - eelModel.1$null.deviance)/(nrow(eelData))) #get Cox & Snell's r2
@@ -80,29 +82,26 @@ logisticPseudoR2s(eelModel.2)
 
 #---------------------------------------------------------------------------------------
 
-#Compute odds ratio of predictors, increase of 1 in b = increase / decrease of odds  by ...
+#Compute odds ratio of predictors
 exp(eelModel.2$coefficients)
 exp(confint(eelModel.2))
 
-#compare model1 and model 2
-modelChi <- eelModel.1$deviance - eelModel.2$deviance
-chidf <- eelModel.1$df.residual - eelModel.2$df.residual
-chisq.prob <- 1 - pchisq(modelChi, chidf)
-modelChi; chidf; chisq.prob
-
-anova(eelModel.1, eelModel.2) #alternative, compare model1 and model 2
-
 
 #---------------------------------------------------------------------------------------
+
 #casewise diagnostics
-#check if cases exert undue influence on model; check 7.7 for more info
 eelData$predicted.probabilities <- fitted(eelModel.1)
-eelData$standardized.residuals <- rstandard(eelModel.1) #only 5% should lie outside 1.96, above 3 is cause for concern
-eelData$studentized.residuals <- rstudent(eelModel.1) #only 5% should lie outside 1.96, above 3 is cause for concern
-eelData$dfbeta <- dfbeta(eelModel.1) #should be less than 1
-eelData$dffit <- dffits(eelModel.1) #should be less than 1
-eelData$leverage <- hatvalues(eelModel.1) #lies between 0-1, expected value: number of predictors + 1 / n (e.g. 2/113 = 0.018)
-head(eelData)
+eelData$standardized.residuals <- rstandard(eelModel.1) #5% >1.96, >3 is cause for concern
+eelData$studentized.residuals <- rstudent(eelModel.1) #5% >1.96, >3 is cause for concern
+eelData$dfbeta <- dfbeta(eelModel.1) #<1
+eelData$dffit <- dffits(eelModel.1) #<1
+eelData$leverage <- hatvalues(eelModel.1) #<1, expected value: number of predictors + 1 / n
+
+
+
+
+
+
 
 
 
