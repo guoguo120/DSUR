@@ -21,3 +21,6 @@
 # - H18: Categorical data
 # - H19: Multilevel linear models
 
+
+#TODO:
+# - packages to be explored: [...]
