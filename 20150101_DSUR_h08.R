@@ -203,12 +203,12 @@ head(mlChat)
 #---------------------------------------------------------------------------------------
 
 chatModel <- mlogit(Success ~ 1 | Good_Mate + 
-                                    Funny + 
-                                    Gender + 
-                                    Sex + 
-                                    Gender:Sex + 
-                                    Funny:Gender, 
-                                    data = mlChat, reflevel=3)
+                                        Funny + 
+                                        Gender + 
+                                        Sex + 
+                                        Gender:Sex + 
+                                        Funny:Gender, 
+                                        data = mlChat, reflevel = 3)
 
 summary(chatModel)
 
@@ -240,12 +240,12 @@ mlChat$logGood <- log(mlChat$Good_Mate + 1)
 mlChat$logSex <- log(mlChat$Sex + 1)
 
 chatTest.1 <- mlogit(Success ~ 1 | Good_Mate + 
-                                    Funny + 
-                                    Sex + 
-                                    Funny:logFunny + 
-                                    Good_Mate:logGood + 
-                                    Sex:logSex, 
-                                    data = mlChat, reflevel = 3)
+                                        Funny + 
+                                        Sex + 
+                                        Funny:logFunny + 
+                                        Good_Mate:logGood + 
+                                        Sex:logSex, 
+                                        data = mlChat, reflevel = 3)
 
 summary(chatTest.1)
 
