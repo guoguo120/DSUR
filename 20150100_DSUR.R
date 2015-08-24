@@ -1,8 +1,10 @@
-#http://www.sagepub.com/dsur/main.htm
 
-# - H1/2: statistics
-# - H3: get to know R
-# - H4: graphs
+#---------------------------------------------------------------------------------------
+# DSUR
+
+# - H1: Statistics
+# - H3: Get to know R
+# - H4: Graphs
 # - H5: Exploring assumptions
 # - H6: Correlation
 # - H7: Regression
@@ -22,5 +24,38 @@
 # - H19: Multilevel linear models
 
 
-#TODO:
-# - packages to be explored: [...]
+
+#---------------------------------------------------------------------------------------
+
+#Pre modeling stage
+# - Data visualization: ggplot2, googleVis
+# - Data transformation: dplyr, data.table
+# - Missing value imputation: MissForest, MissMDA
+# - Outlier detection: Outliers, EVIR
+# - Feature selection: Features, RRF
+# - Dimension reduction: FactoMineR, CCP
+ 
+#Modeling stage
+# - Continuous regression: car, randomForest
+# - Ordinal regression: RMiner, CoreLearn
+# - Classification: Caret, BigRF
+# - Clustering: CBA, RankCluster
+# - Time series: forecast, LTSA
+# - Survival: survival, Basta
+# - Extra: H2O, e1071, GMB, Quantmod,
+ 
+#Post modeling stage
+# - General model validation: LSMeans, Comparison
+# - Regression validation: RegTest, ACD
+# - Classification validation: BinomTools, DAIM
+# - Clustering validation: ClustEval, SigClust
+# - ROC Analysis: PROC, TimeROC
+ 
+#Extra
+# - Improve performance: Rcpp, parallel
+# - Work with web: XML, jasonlite, httr
+# - Report results: shiny, RMarkdown
+# - Text Mining: tm, twitteR
+# - Database: sqldf, RODBC, RMongo
+# - Miscellaneous: swirl, reshape2, qcc
+# - SPSS: Haven
